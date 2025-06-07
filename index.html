@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>today's coffee</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Moirai+One&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    @font-face {
+      font-family: 'Galmuri9';
+      src: url('Galmuri9.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Galmuri9', sans-serif;
+      background-color: #241919;
+      color: #feefb5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .wrapper {
+      padding-top: 100px; /* 높이를 올리거나 내릴 수 있는 조정값 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: 'Moirai One', cursive;
+      font-size: 40px;
+      margin-top: 5px;
+      margin-bottom: 0px;
+    }
+
+    #subtitle {
+      margin-bottom: 40px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #ff99be;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease-in-out;
+      margin-bottom: 30px;
+    }
+
+    button:hover {
+      background-color: #ff2373;
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 20px;
+      font-style: normal;
+      opacity: 0.8;
+    }
+
+    #description {
+      margin-top: 16px;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    #coffeeImage {
+      margin: 40px auto 0;
+      display: none;
+      max-width: 300px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.5s ease;
+    }
+
+    .fade-in {
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .rainbow-char {
+      color: #fff;
+      display: inline-block;
+      animation: flickerColor 0.2s steps(1, end) infinite;
+    }
+
+    @keyframes flickerColor {
+      0% { color: #ff4ecb; }
+      20% { color: #ffd966; }
+      40% { color: #9eff6e; }
+      60% { color: #6ee8ff; }
+      80% { color: #b78aff; }
+      100% { color: #ff4ecb; }
+    }
+
+    @keyframes rainbowFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes rainbowShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .shiny-rainbow {
+      background: linear-gradient(
+        270deg,
+        #ff4ecb,
+        #ffd966,
+        #9eff6e,
+        #6ee8ff,
+        #b78aff,
+        #ffa07a,
+        #f28fff,
+        #ff4ecb
+      );
+      background-size: 800% 800%;
+      animation: rainbowFlow 2.5s linear infinite;
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+
+      text-shadow: 0 0 5px; rgba(255, 255, 255, 0.25);
+      filter: brightness(1.2) contrast(1.1);
+    }
+
+    .scent {
+      position: absolute;
+      bottom: 160px;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgb(255, 152, 205) 0%, transparent 80%);
+      border-radius: 50%;
+      animation: scentFloat 6s ease-in-out infinite;
+      pointer-events: none;
+      filter: blur(8px);
+      opacity: 0.6;
+      z-index: 1;
+      animation-duration: 7s;
+    }
+
+    @keyframes scentFloat {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translateY(-60px) scale(1.1);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-120px) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    #coffeeButton {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    #coffeeButton img {
+      width: 300px;
+      height: 240px;
+      transition: transform 0.2s ease;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    #coffeeButton img:hover {
+      transform: scale(1.15);
+    }
+
+     .galmuri {
+      font-family: 'Galmuri9', sans-serif;
+     }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <p id="date" style="font-size: 15px; opacity: 0.7; margin-bottom: 8px;"></p>
+    <h1>오늘의 커피</h1>
+    <p id="subtitle" class="galmuri">. ݁₊ ⊹ 향긋한 아침을 선물해요₊ ⊹ . ݁˖</p>
+    <button onclick="recommendCoffee()" id="coffeeButton">
+      <img src="coffee-icon.png" alt="커피 버튼" />
+    </button>
+
+    <div id="result" class="galmuri"></div>
+    <p id="description" class="galmuri"></p>
+    <img id="coffeeImage" src="" alt="coffee image" />
+  </div>
+
+  <!-- 향기 효과 -->
+  <div class="scent" style="left: 47%; animation-delay: 0s;"></div>
+  <div class="scent" style="left: 50%; animation-delay: 1s;"></div>
+  <div class="scent" style="left: 53%; animation-delay: 2s;"></div>
+
+  <script>
+    // 날짜 표시
+    const dateElement = document.getElementById("date");
+    const today = new Date();
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    dateElement.textContent = today.toLocaleDateString("en-US", options);
+
+    const coffeeDetails = {
+      "lavender latte": {
+        image: "lavender.jpg",
+        description: "a calming blend of floral lavender and steamed milk"
+      },
+      "vanilla cold brew": {
+        image: "vanilla.jpg",
+        description: "smooth cold brew with a hint of vanilla sweetness"
+      },
+      "cinnamon mocha": {
+        image: "cinnamon.jpg",
+        description: "rich chocolate espresso spiced with warm cinnamon"
+      },
+      "flat white": {
+        image: "flatwhite.jpg",
+        description: "a balanced harmony of velvety milk and strong espresso"
+      },
+      "hazelnut americano": {
+        image: "hazelnut.jpg",
+        description: "a nutty twist on the classic bold americano"
+      },
+      "oat milk latte": {
+        image: "oatmilk.jpg",
+        description: "creamy and dairy-free, a gentle oat companion to espresso"
+      },
+      "honey brown espresso": {
+        image: "honey.jpg",
+        description: "deep espresso mellowed by sweet honey notes"
+      }
+    };
+
+    let typing;
+
+    function recommendCoffee() {
+      const coffees = Object.keys(coffeeDetails);
+      const randomIndex = Math.floor(Math.random() * coffees.length);
+      const selectedCoffee = coffees[randomIndex];
+      const selected = coffeeDetails[selectedCoffee];
+
+      const resultElement = document.getElementById("result");
+      const descriptionElement = document.getElementById("description");
+      const coffeeImage = document.getElementById("coffeeImage");
+
+      resultElement.textContent = "";
+      descriptionElement.textContent = "";
+      coffeeImage.style.display = "none";
+
+      let i = 0;
+      const textToType = `☕️ 오늘의 추천 커피는...${selectedCoffee}`;
+      resultElement.classList.add("galmuri");
+
+      if (typing) clearInterval(typing);
+
+      typing = setInterval(() => {
+        const char = textToType[i] === ' ' ? '&nbsp;' : textToType[i];
+        resultElement.innerHTML += `<span class="rainbow-char">${char}</span>`;
+        i++;
+        
+        if (i >= textToType.length) {
+          clearInterval(typing);
+          const spans = resultElement.querySelectorAll('span');
+          spans.forEach(span => span.classList.add('rainbow-char'));
+
+          descriptionElement.textContent = selected.description;
+          descriptionElement.classList.add("galmuri");
+
+          coffeeImage.classList.remove("fade-in");
+          coffeeImage.src = selected.image;
+          coffeeImage.style.display = "block";
+          void coffeeImage.offsetWidth;
+          coffeeImage.classList.add("fade-in");
+        }
+      }, 50);
+    }
+  </script>
+</body>
+</html>
